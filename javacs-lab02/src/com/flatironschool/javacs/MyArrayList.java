@@ -62,20 +62,17 @@ public class MyArrayList<E> implements List<E> {
 		if (index < 0 || index > size) {
 			throw new IndexOutOfBoundsException();
 		}
-		if(equals(array[index], null)){
 		
-			array[index] = element;
+		add(element);
 
-		}		
-		else{
-			for (int i = index; i<size()-1 ; i++){
+		for (int i = size-1; i>index; i--){
 				
-				array[i+1] = array[i];
+			array[i] = array[i-1];
 				
-			}
-			add(array[size()]);
-			array[index] = element;
 		}
+		array[index] = element;
+			
+		
 	}
 
 	@Override
@@ -124,6 +121,10 @@ public class MyArrayList<E> implements List<E> {
 
 	@Override
 	public int indexOf(Object target) {
+		if (equals(target, null)){
+			return -1;
+		}
+			
 		for(int i = 0; i < size(); i++) {
 
 			if (equals(target,array[i])) {
@@ -201,10 +202,13 @@ public class MyArrayList<E> implements List<E> {
 
 	@Override
 	public E remove(int index) {
-		E temp = array[index];
-		for(int i = index+1; i <size()-1; i++){
+
+		E temp = get(index);
+		for(int i = index + 1 ; i < size()-1; i++) {
 			array[i] = array[i+1];
 		}
+
+		size--;
 		return temp;
 	}
 
